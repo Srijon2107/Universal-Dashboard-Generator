@@ -90,11 +90,15 @@ if uploaded_file is not None:
             if fig:
                 st.plotly_chart(fig, use_container_width=True)
 
-                # Save chart
-                buf = BytesIO()
-                fig.write_image(buf, format="png")
-                buf.seek(0)
-                st.download_button("📥 Download Chart (PNG)", buf, "chart.png", mime="image/png")
+                # Save chart as interactive HTML
+                html_bytes = fig.to_html(full_html=False).encode("utf-8")
+                st.download_button(
+                label="📥 Download Chart (HTML)",
+                data=html_bytes,
+                file_name="chart.html",
+                mime="text/html")
+                    
+
 
                 # Simplified Dashboard Summary
                 st.subheader("🧠 Dashboard Summary")
